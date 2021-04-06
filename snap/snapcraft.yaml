@@ -2,9 +2,7 @@ name: boulderrun
 title: Boulder Run
 version: '1.8.1'
 summary: Boulder Dash clone on Java
-description: |
-Run, dig, make traps! You are playing miner and you need to mine emeralds, but in caves you can find pythons!
-
+description: Run, dig, make traps! You are playing miner and you need to mine emeralds, but in caves you can find pythons!
 base: core18
 confinement: strict
 
