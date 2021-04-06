@@ -1,18 +1,31 @@
-name: boulderrun # you probably want to 'snapcraft register <name>'
-base: core18 # the base snap is the execution environment for this snap
-version: '1.0' # just for humans, typically '1.2+git' or '1.3.2'
-summary: Boulder Dash clone on Java # 79 char long summary
+name: boulderrun
+title: Boulder Run
+version: '1.8.1'
+summary: Boulder Dash clone on Java
 description: |
-  Dig, run, make traps! You need to collect all diamonds to win!
+Run, dig, make traps! You are playing miner and you need to mine emeralds, but in caves you can find pythons!
 
-grade: devel # must be 'stable' to release into candidate/stable channels
-confinement: devmode # use 'strict' once you have the right plugs and slots
+base: core18
+confinement: strict
+
+apps:
+  boulderrun:
+    extensions:
+      - gnome-3-28
+    command: boulderrun-java -jar $SNAPCRAFT_PROJECT_VERSION/build/libs/boulderrun-1.0-SNAPSHOT.jar
+    environment:
+      JAVA_HOME: $SNAP/usr/lib/jvm/java-11-openjdk-amd64
+      PATH: $JAVA_HOME/jre/bin:$PATH
+    plugs:
+      - home
+      - network
+      - cups-control
 
 parts:
   boulderrun:
-    # See 'snapcraft plugins'
     plugin: gradle
     source: https://github.com/timaaos/boulderrun.git
-    source-type: git
-    gradle-options: []   # suppress running of tests and run the war task
-    gradle-output-dir: build/libs
+    source-tag: release-$SNAPCRAFT_PROJECT_VERSION
+    gradle-version: '5.1.1'
+    gradle-output-dir: BIN
+    gradle-options: [-xtest, -xcreateGitTag]
